@@ -2,9 +2,11 @@
 /**
  *@author: Nathan Bullivant
  *@description: Newsletter Object
- * Contains a single issue of group newsletter preferably as pdf file.
+ * Contains a single issue of newsletter preferably as pdf file.
  * Uploads to the /assets/<URLSegment of parent>
  * Renames file to the next month and year from parentPage->CurrentIssue
+ * If this is the first upload assumes current month and year.
+ *
  * Child of NewsletterHolder Page Type
  **/
 
@@ -46,6 +48,7 @@
 		if($this->IssueMonth  == NULL) {
 			//Get current issue date from Parent Container Page
 			$LastIssue = $this->Parent()->CurrentIssue;
+            if ($LastIssue == 0) {$LastIssue = date('Y/m/d', strtotime("-1 months"));}
 			//Create Month and date for this issue from the LastIssue variable in parent container.
 			$ThisIssueMonth = date('n', strtotime($LastIssue))+1;
 			$ThisIssueYear = date('Y', strtotime($LastIssue));
